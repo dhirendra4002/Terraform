@@ -1,6 +1,6 @@
 provider "aws" {
- #access_key = "AKIARZP47FIYQH6DF5HX"
- #secret_key = "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"
+ access_key = "AKIARZP47FIYQH6DF5HX"
+ secret_key = "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"
   region     = "ap-south-1"
 }
 
@@ -46,14 +46,14 @@ resource "aws_instance" "web" {
     Name = "Prod"
   }
   provisioner "remote-exec" {
-    inline = [
+   inline = [
       "ping -c 10 8.8.8.8",
     ]
   }
 
-  provisioner "local-exec" {
-    command = "ansible-playbook -u ubuntu -i ${aws_instance.web.public_ip}, --private-key ${var.privatekey} jenkins.yml"
-  }
+  #provisioner "local-exec" {
+   # command = "ansible-playbook -u ubuntu -i ${aws_instance.web.public_ip}, --private-key ${var.privatekey} jenkins.yml"
+  #}
 }
 output "web_ip" {
   value = aws_instance.web.public_ip
